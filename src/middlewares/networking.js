@@ -1,3 +1,9 @@
+/**
+ * Created by ruiqili on 19/9/15.
+ */
+// import { Schema, arrayOf, normalize } from 'normalizr';
+// import 'isomorphic-fetch';
+import agent from 'superagent';
 import _ from 'underscore';
 
 export const CALL_API = 'Call Backend API';
@@ -11,46 +17,33 @@ export default store => next => action => {
     if (parmIndex > 0) {
         apiCall.url = apiCall.url.slice(0, parmIndex) + user.userId + apiCall.url.slice(parmIndex + 7);
     }
+    let request = agent(apiCall.method, 'http://granny.io/api' + apiCall.url)
+        .set('Accept', 'application/json')
+        .type('json');
 
-    let fetchConfig = {
-        method: apiCall.method,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    };
-    if (apiCall.body) fetchConfig.body = JSON.stringify(apiCall.body);
-
-    let qs = '';
-    if (apiCall.token) {
-        qs = `?access_token=${user.accessToken}`;
-    }
-    if (apiCall.query) {
-        qs ? qs += '&' : '?';
-        _.keys(apiCall.query).forEach(key => {
-            qs += `${key}=${apiCall.query[key]}&`;
-        });
-    }
+    if (apiCall.body) request.send(apiCall.body);
+    if (apiCall.query) request.query(apiCall.query);
+    if (apiCall.token) request.query({ access_token: user.accessToken });
+    if (apiCall.file) request.attach('file', apiCall.file, Date.now() + apiCall.file.name);
+    if (apiCall.field) _.map(apiCall.field, (value, key) => request.field(key, value));
 
     next({ type: apiCall.action, finished: false, args: apiCall.args });
-    fetch(`http://www.granny.io/api${apiCall.url}${qs}`, fetchConfig)
-        .then(response => {
-            return response.json();
-        })
-        .then(body => {
+    request.end((error, res) => {
+        if (error || res.status !== 200) {
             next({
                 type: apiCall.action,
                 finished: true,
-                result: body,
+                error: error ? error.message : res.text,
                 args: apiCall.args
             });
-        })
-        .catch(error => {
+        } else {
             next({
                 type: apiCall.action,
                 finished: true,
-                error: error,
-                args: apiCall.args
+                result: JSON.parse(res.text),
+                args: apiCall.args,
+                requireLogin: res.status == 401
             });
-        });
+        }
+    });
 }

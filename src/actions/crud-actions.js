@@ -94,7 +94,7 @@ export function queryReports (selection) {
 function createItem (path, item, action) {
 	return {
 		[CALL_API]: {
-			method: 'post',
+			method: 'POST',
 			url: path,
 			body: item,
 			token: true,
@@ -106,7 +106,7 @@ function createItem (path, item, action) {
 function uploadItem (path, file, field, action) {
 	return {
 		[CALL_API]: {
-			method: 'post',
+			method: 'POST',
 			url: path,
 			field: field,
 			file: file,
@@ -119,7 +119,7 @@ function uploadItem (path, file, field, action) {
 function updateItem (path, fields, action) {
 	return {
 		[CALL_API]: {
-			method: 'put',
+			method: 'PUT',
 			url: path,
 			body: fields,
 			token: true,
@@ -131,7 +131,7 @@ function updateItem (path, fields, action) {
 function deleteItem (path, id, action) {
 	return {
 		[CALL_API]: {
-			method: 'delete',
+			method: 'DELETE',
 			url: path,
 			token: true,
 			action: action,
@@ -143,7 +143,7 @@ function deleteItem (path, id, action) {
 function getItem (path, action) {
 	return {
 		[CALL_API]: {
-			method: 'get',
+			method: 'GET',
 			url: path,
 			token: true,
 			action: action
@@ -154,7 +154,7 @@ function getItem (path, action) {
 function queryItems (path, selection, action) {
 	return {
 		[CALL_API]: {
-			method: 'get',
+			method: 'GET',
 			url: path,
 			token: true,
 			query: { filter: JSON.stringify(Object.assign({limit: 10, order: 'date DESC'}, selection)) },

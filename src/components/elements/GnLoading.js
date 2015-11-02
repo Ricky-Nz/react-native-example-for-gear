@@ -7,11 +7,13 @@ class GnLoading extends Component {
 	}
 	render() {
 		return (
-			<Modal animated={true} transparent={true} visible={this.state.show}>
-				<View style={styles.content}>
-					<Text style={styles.indicator}>Loading...</Text>
-				</View>
-			</Modal>
+			<View>
+				<Modal animated={true} transparent={true} visible={true}>
+					<View style={styles.content}>
+						<Text style={styles.indicator}>Loading...</Text>
+					</View>
+				</Modal>
+			</View>
 		);
 	}
 	show() {

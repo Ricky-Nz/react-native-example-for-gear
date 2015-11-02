@@ -7,9 +7,9 @@ class GnIcon extends React.Component {
 		const iconStyle = styles[size];
 		let iconSize;
 		switch (size) {
-			case 'sm': iconSize = 24; break;
-			case 'md': iconSize = 36; break;
-			case 'lg': iconSize = 48; break;
+			case 'sm': iconSize = 22; break;
+			case 'md': iconSize = 33; break;
+			case 'lg': iconSize = 44; break;
 		}
 
 		return <Icon name={`fontawesome|${icon}`}

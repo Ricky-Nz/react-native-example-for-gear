@@ -1,6 +1,7 @@
 import GnIcon from './GnIcon';
 import GnInput from './GnInput';
 import GnButton from './GnButton';
+import GnIconButton from './GnIconButton';
 import GnTabBar from './GnTabBar';
 import GnClickable from './GnClickable';
 import GnSearchbar from './GnSearchbar';
@@ -14,6 +15,7 @@ export default {
 	GnIcon,
 	GnInput,
 	GnButton,
+	GnIconButton,
 	GnTabBar,
 	GnClickable,
 	GnSearchbar,

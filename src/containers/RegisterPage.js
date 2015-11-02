@@ -1,16 +1,16 @@
-import React, { Component, PropTypes, StyleSheet, View, Text } from 'react-native';
+import React, { Component, PropTypes, StyleSheet, View, ToastAndroid, Text } from 'react-native';
 import { GnIcon, GnInput, GnButton, GnLoading } from '../components/elements';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux/native';
-import { login } from '../actions/user-actions';
+import { register } from '../actions/user-actions';
 
-class LoginPage extends Component {
+class RegisterPage extends Component {
 	componentWillReceiveProps(nextProps) {
 		const newState = nextProps.actionState;
 		const lastState = this.props.actionState;
 		if (newState && lastState
 				&& newState.finished && !newState.error && !lastState.finished) {
-			nextProps.navigator.push({page: 'home'});
+			nextProps.navigator.pop();
 		}
 	}
 	render() {
@@ -18,22 +18,20 @@ class LoginPage extends Component {
 			<View style={styles.content}>
 				<View style={styles.bannerContent}>
 					<GnIcon icon='cogs' size='lg' color='white'/>
-					<Text style={styles.banner}>Gear Test Automation</Text>
+					<Text style={styles.banner}>Register</Text>
 				</View>
 				<View style={styles.mainContent}>
 					<View style={styles.inputContent}>
-						<GnInput ref='email' keyboardType='email-address'
-							placeholder='email' icon='user' iconSize='sm' iconColor='gray'
-							defaultValue='ruiqi.sg@gmail.com'/>
-						<GnInput ref='password' keyboardType='default'
-							placeholder='password' icon='key' iconSize='sm' iconColor='gray' secureTextEntry={true}
-							defaultValue='123456'/>
+						<GnInput ref='email' keyboardType='email-address' placeholder='email'
+							icon='user' iconSize='sm' iconColor='gray'/>
+						<GnInput ref='password' keyboardType='default' placeholder='password'
+							icon='key' iconSize='sm' iconColor='gray' secureTextEntry={true}/>
+						<GnInput ref='confirmPassword' keyboardType='default' placeholder='confirm password'
+							icon='key' iconSize='sm' iconColor='gray' secureTextEntry={true}/>
 					</View>
 					<View style={styles.buttonbar}>
-						<GnButton style={styles.button} label='Register'
+						<GnButton label='Register'
 							onPress={this.onRegisterClicked.bind(this)}/>
-						<GnButton style={styles.button} label='Login'
-							onPress={this.onLoginClicked.bind(this)}/>
 					</View>
 				</View>
 				<GnLoading ref='dialog'/>
@@ -41,22 +39,22 @@ class LoginPage extends Component {
 		);
 	}
 	onRegisterClicked() {
-		this.navigator.push({page: 'register'});
-	}
-	onLoginClicked() {
 		const email = this.refs.email.getValue();
 		const password = this.refs.password.getValue();
+		const confirmPassword = this.refs.confirmPassword.getValue();
 		if (!email) {
 			return ToastAndroid.show('email can\'t be empty', ToastAndroid.SHORT);
-		} else if (!password) {
-			return ToastAndroid.show('password can\'t be empty', ToastAndroid.SHORT);
+		} else if (!password || password != confirmPassword) {
+			return ToastAndroid.show('password not consistent', ToastAndroid.SHORT);
+		} else if (password.length < 4) {
+			return ToastAndroid.show('password length can\'t less then 4 digit', ToastAndroid.SHORT);
 		}
 
-		this.props.dispatch(login(email, password));
+		this.props.dispatch(register(email, password));
 	}
 }
 
-LoginPage.propTypes = {
+RegisterPage.propTypes = {
 	navigator: PropTypes.object.isRequired
 };
 
@@ -67,10 +65,11 @@ const styles = StyleSheet.create({
 		backgroundColor: '#00BCD4'
 	},
 	bannerContent: {
-		flex: 1,
 		flexDirection: 'row',
 		alignItems: 'center',
-		justifyContent: 'center'
+		justifyContent: 'center',
+		paddingTop: 80,
+		paddingBottom: 20
 	},
 	banner: {
 		fontSize: 26,
@@ -78,7 +77,6 @@ const styles = StyleSheet.create({
 		color: 'white'
 	},
 	mainContent: {
-		flex: 2,
 		padding: 10
 	},
 	inputContent: {
@@ -89,9 +87,6 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		flexDirection: 'row',
 		justifyContent: 'flex-end'
-	},
-	button: {
-		marginLeft: 10
 	}
 });
 
@@ -111,7 +106,7 @@ const storeSelector = createSelector(
 	actionState => ({actionState})
 );
 
-export default connect(storeSelector)(LoginPage);
+export default connect(storeSelector)(RegisterPage);
 
 
 

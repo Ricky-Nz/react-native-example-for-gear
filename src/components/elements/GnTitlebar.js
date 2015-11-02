@@ -1,18 +1,18 @@
 import React, { Component, PropTypes, StyleSheet, View, Text } from 'react-native';
-import GnIcon from './GnIcon';
+import GnIconButton from './GnIcon';
 
 class GnTitlebar extends Component {
 	render() {
 		return (
 			<View style={styles.content}>
 				<View style={styles.actionContent}>
-					{this.props.leftIcon&&<GnIcon icon={this.props.leftIcon} color='white'/>}
+					{this.props.leftIcon&&<GnIconButton icon={this.props.leftIcon} iconColor='white'/>}
 				</View>
 				<View style={styles.titleContent}>
 					<Text style={styles.title}>{this.props.title}</Text>
 				</View>
 				<View style={styles.actionContent}>
-					{this.props.rightIcon&&<GnIcon icon={this.props.rightIcon} color='white'/>}
+					{this.props.rightIcon&&<GnIconButton icon={this.props.rightIcon} iconColor='white'/>}
 				</View>
 			</View>
 		);
@@ -52,3 +52,5 @@ GnTitlebar.propTypes = {
 };
 
 export default GnTitlebar;
+
+

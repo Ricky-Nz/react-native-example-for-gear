@@ -4,10 +4,12 @@ import {
 	GET_REPORT, DELETE_REPORT, LOAD_REPORTS,
 	GET_SCRIPT, CREATE_SCRIPT, UPDATE_SCRIPT, DELETE_SCRIPT, LOAD_SCRIPTS
 } from '../actions/crud-actions';
-import { LOGIN, REGISTER } from '../actions/user-actions';
+import { LOGIN, REGISTER, CLEAR_ERROR } from '../actions/user-actions';
 
 export default function (status = {}, action) {
 	switch(action.type) {
+		case CLEAR_ERROR:
+			return Object.assign({}, status, {error: null});
 		case CREATE_PARAMETER:
 		case UPDATE_PARAMETER:
 		case DELETE_PARAMETER:
