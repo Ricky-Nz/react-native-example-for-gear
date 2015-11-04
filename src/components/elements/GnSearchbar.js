@@ -4,7 +4,7 @@ import GnInput from './GnInput';
 class GnSearchbar extends Component {
 	render() {
 		return (
-			<GnInput icon='search' size='sm' placeholder={this.props.placeholder}
+			<GnInput ref='input' icon='search' size='sm' placeholder={this.props.placeholder}
 				onChangeText={this.onChangeText.bind(this)} style={this.props.style}/>
 		);
 	}
@@ -22,6 +22,9 @@ class GnSearchbar extends Component {
 		} else {
 			this.props.onSearch(text);
 		}
+	}
+	getValue() {
+		return this.refs.input.getValue();
 	}
 }
 

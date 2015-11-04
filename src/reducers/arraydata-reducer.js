@@ -1,4 +1,24 @@
 import _ from 'underscore';
+import { CREATE_ITEM, UPDATE_ITEM, DELETE_ITEM, LOAD_ITEMS } from '../actions/crud-actions';
+
+export default function (array = [], action) {
+	if (!action.finished || action.error) {
+		return array;
+	}
+
+	switch(action.type) {
+		case CREATE_ITEM:
+			return arrayUnshift(array, action);
+		case UPDATE_ITEM:
+			return arrayUpdate(array, action);
+		case DELETE_ITEM:
+			return arrayDelete(array, action);
+		case LOAD_ITEMS:
+			return arrayLoad(array, action);
+		default:
+			return array;
+	}
+}
 
 export function arrayUnshift (datas, action) {
 	if (!action.finished || action.error) {

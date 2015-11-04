@@ -1,10 +1,7 @@
 import { LOGIN, LOGOUT } from '../actions/user-actions';
+import { LOAD_ITEMS } from '../actions/crud-actions';
 
-export default function (user = {}, action) {
-	if (action.requireLogin) {
-		return {};
-	}
-
+export default function (app = {}, action) {
 	switch(action.type) {
 		case LOGIN:
 			if (action.finished && !action.error) {
@@ -14,16 +11,22 @@ export default function (user = {}, action) {
 	            	email: action.result.email
 	            }
 			} else {
-				return user;
+				return app;
 			}
 		case LOGOUT:
 			if (action.finished) {
 				return {}
 			} else {
-				return user;
+				return app;
+			}
+		case LOAD_ITEMS:
+			if (action.finished && !action.error) {
+				return Object.assign({}, app, {total: action.result.total, skip: action.result.skip + action.result.data.length});
+			} else {
+				return app;
 			}
 		default: {
-			return user;
+			return app;
 		}
 	}
 }

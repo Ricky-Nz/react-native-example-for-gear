@@ -32,7 +32,7 @@ class Application extends React.Component {
 			case 'home':
 				return <HomePage navigator={navigator}/>;
 			case 'script':
-				return <ScriptPage navigator={navigator}/>;
+				return <ScriptPage navigator={navigator} script={route.script}/>;
 		}
 	}
 }

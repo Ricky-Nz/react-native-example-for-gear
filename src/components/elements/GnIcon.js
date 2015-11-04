@@ -13,7 +13,7 @@ class GnIcon extends React.Component {
 		}
 
 		return <Icon name={`fontawesome|${icon}`}
-			size={iconSize} style={iconStyle} color={color}/>;
+			size={iconSize} style={[iconStyle, this.props.style]} color={color}/>;
 	}
 }
 

@@ -1,24 +1,28 @@
-import React, { Component, TextInput, StyleSheet, View } from 'react-native';
+import React, { Component, PropTypes, TextInput, StyleSheet, View } from 'react-native';
 import GnIcon from './GnIcon';
 
 class GnInput extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {text: props.defaultValue};
 	}
 	render() {
 		const { icon, iconSize, iconColor, style, ...inputProps } = this.props;
 
 		return (
 			<View style={[style, styles.content]}>
-				<GnIcon icon={icon} size={iconSize} color={iconColor}/>
-				<TextInput {...inputProps} underlineColorAndroid='transparent'
+				{icon&&<GnIcon icon={icon} size={iconSize} color={iconColor}/>}
+				<TextInput {...inputProps} underlineColorAndroid='gray'
 					style={styles.input} value={this.state.text}
 					onChangeText={this.onChangeText.bind(this)}/>
 			</View>
 		);
 	}
 	onChangeText(text) {
+		if (this.props.onChangeText) {
+			this.props.onChangeText(text);
+		}
+		
 		this.setState({text: text});
 	}
 	getValue() {
@@ -34,9 +38,16 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		flex: 1,
-		marginLeft: 5
+		marginLeft: 5,
+		padding: 7
 	}
 });
+
+GnInput.propTypes = {
+	icon: PropTypes.string,
+	iconColor: PropTypes.string,
+	iconSize: PropTypes.string
+};
 
 export default GnInput;
 

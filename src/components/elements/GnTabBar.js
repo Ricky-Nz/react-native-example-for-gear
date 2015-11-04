@@ -10,7 +10,7 @@ class GnTabBar extends Component {
 				onPress={() => this.props.onSelectTab(index)}>
 				<View style={styles.tabContent}>
 					<GnIcon icon={tab.icon} size='sm' color={tintColor}/>
-					<Text style={{color: tintColor}}>{tab.label}</Text>
+					<Text style={{color: tintColor, fontSize: 10}}>{tab.label}</Text>
 				</View>
 			</GnClickable>
 		));

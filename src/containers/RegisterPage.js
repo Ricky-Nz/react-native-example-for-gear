@@ -9,8 +9,12 @@ class RegisterPage extends Component {
 		const newState = nextProps.actionState;
 		const lastState = this.props.actionState;
 		if (newState && lastState
-				&& newState.finished && !newState.error && !lastState.finished) {
-			nextProps.navigator.pop();
+				&& newState.finished && !lastState.finished) {
+			if (newState.error) {
+				ToastAndroid.show(newState.error, ToastAndroid.SHORT);
+			} else {
+				this.props.navigator.pop();
+			}
 		}
 	}
 	render() {
@@ -93,7 +97,7 @@ const styles = StyleSheet.create({
 const actionReducer = createSelector(
 	state => state.actionState,
 	actionState => {
-		if (actionState.type === 'register') {
+		if (actionState.type === 'REGISTER') {
 			return actionState;
 		} else {
 			return null;

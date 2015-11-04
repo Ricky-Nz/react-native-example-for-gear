@@ -1,4 +1,4 @@
-import React, { Component, PropTypes, StyleSheet, View, Text } from 'react-native';
+import React, { Component, PropTypes, StyleSheet, ToastAndroid, View, Text } from 'react-native';
 import { GnIcon, GnInput, GnButton, GnLoading } from '../components/elements';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux/native';
@@ -9,8 +9,12 @@ class LoginPage extends Component {
 		const newState = nextProps.actionState;
 		const lastState = this.props.actionState;
 		if (newState && lastState
-				&& newState.finished && !newState.error && !lastState.finished) {
-			nextProps.navigator.push({page: 'home'});
+				&& newState.finished && !lastState.finished) {
+			if (newState.error) {
+				ToastAndroid.show(newState.error, ToastAndroid.SHORT);
+			} else {
+				this.props.navigator.push({page: 'home'});
+			}
 		}
 	}
 	render() {
@@ -41,7 +45,7 @@ class LoginPage extends Component {
 		);
 	}
 	onRegisterClicked() {
-		this.navigator.push({page: 'register'});
+		this.props.navigator.push({page: 'register'});
 	}
 	onLoginClicked() {
 		const email = this.refs.email.getValue();
@@ -98,7 +102,7 @@ const styles = StyleSheet.create({
 const actionReducer = createSelector(
 	state => state.actionState,
 	actionState => {
-		if (actionState.type === 'register') {
+		if (actionState.type === 'LOGIN') {
 			return actionState;
 		} else {
 			return null;

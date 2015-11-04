@@ -4,16 +4,17 @@ import GnClickable from './GnClickable';
 
 class GnListItem extends Component {
 	render() {
-		const { icon, primary, secondary, ...itemProps } = this.props;
+		const { leftView, primaryText, secondaryText, rightView, style, ...itemProps } = this.props;
 
 		return (
 			<GnClickable {...itemProps}>
-				<View style={styles.content}>
-					{icon&&<GnIcon icon={icon}/>}
+				<View style={[styles.content, style]}>
+					{leftView}
 					<View style={styles.textContent}>
-						<Text style={styles.primary}>{primary}</Text>
-						<Text style={styles.secondary}>{secondary}</Text>
+						<Text style={styles.primary}>{primaryText}</Text>
+						<Text style={styles.secondary}>{secondaryText}</Text>
 					</View>
+					{rightView}
 				</View>
 			</GnClickable>
 		);
@@ -42,9 +43,10 @@ const styles = StyleSheet.create({
 });
 
 GnListItem.propTypes = {
-	icon: PropTypes.string,
-	primary: PropTypes.string.isRequired,
-	secondary: PropTypes.string
+	leftView: PropTypes.element,
+	primaryText: PropTypes.string.isRequired,
+	secondaryText: PropTypes.string,
+	rightView: PropTypes.element
 };
 
 export default GnListItem;

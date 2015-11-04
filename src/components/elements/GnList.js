@@ -17,11 +17,12 @@ class GnList extends Component {
 		};
 	}
 	render() {
+		const { array, ...listProps } = this.props;
+
 		return (
 			<ListView dataSource={this.state.dataSource}
-				renderHeader={this.props.renderHeader}
-				renderRow={this.props.renderRow}
-				renderSeparator={() => <View style={styles.separator}/>}/>
+				renderSeparator={() => <View style={styles.separator}/>}
+				{...listProps}/>
 		);
 	}
 }

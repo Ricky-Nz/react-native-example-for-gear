@@ -6,7 +6,6 @@ import { CALL_API } from '../middlewares/networking';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const REGISTER = 'REGISTER';
-export const CLEAR_ERROR = 'CLEAR_ERROR';
 
 export function register(email, password) {
     return {
@@ -42,8 +41,3 @@ export function logout () {
     };
 }
 
-export function clearError () {
-    return {
-        type: CLEAR_ERROR
-    };
-}
