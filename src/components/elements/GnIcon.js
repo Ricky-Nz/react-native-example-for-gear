@@ -1,48 +1,45 @@
 import React, { Component, PropTypes, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-icons';
+import { gnSizes } from './configs';
 
 class GnIcon extends React.Component {
 	render() {
-		const { icon, size, color } = this.props;
-		const iconStyle = styles[size];
+		const iconStyle = styles[this.props.gnSize];
 		let iconSize;
-		switch (size) {
-			case 'sm': iconSize = 22; break;
-			case 'md': iconSize = 33; break;
-			case 'lg': iconSize = 44; break;
+		switch(this.props.gnSize) {
+			case 'sm': iconSize = 18; break;
+			case 'md': iconSize = 26; break;
+			case 'lg': iconSize = 34; break;
 		}
-
-		return <Icon name={`fontawesome|${icon}`}
-			size={iconSize} style={[iconStyle, this.props.style]} color={color}/>;
+		return <Icon name={`fontawesome|${this.props.icon}`}
+					size={iconSize} style={[iconStyle, this.props.style]} color={this.props.color}/>;
 	}
 }
 
 GnIcon.propTypes = {
 	icon: PropTypes.string.isRequired,
-	size: PropTypes.oneOf(['sm', 'md', 'lg']),
+	gnSize: PropTypes.oneOf(gnSizes),
 	color: PropTypes.string
 };
 
 GnIcon.defaultProps = {
-	size: 'sm'
+	gnSize: 'sm'
 };
 
 const styles = StyleSheet.create({
 	sm: {
-		width: 24,
-		height: 24,
-		margin: 2
+		width: 20,
+		height: 20
 	},
 	md: {
-		width: 36,
-		height: 36,
-		margin: 3
+		width: 30,
+		height: 30
 	},
 	lg: {
-		width: 48,
-		height: 48,
-		margin: 4
+		width: 40,
+		height: 40
 	}
 });
 
 export default GnIcon;
+

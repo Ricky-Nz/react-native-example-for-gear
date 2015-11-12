@@ -1,7 +1,7 @@
 import React, { Component, PropTypes, StyleSheet, View } from 'react-native';
 import { GnSearchbar, GnList, GnListItem, GnLoadMoreFooter, GnIcon } from '../components/elements';
 import { createSelector } from 'reselect';
-import { connect } from 'react-redux/native';
+import { connect } from 'react-redux';
 import { LOAD_ITEMS, queryItems } from '../actions/crud-actions';
 
 class ListDataSection extends Component {
@@ -40,7 +40,7 @@ class ListDataSection extends Component {
 		this.onLoadData(text, false);
 	}
 	onLoadData(searchText, loadMore) {
-		let selection = {};
+		let selection = {fields: {id: 1, [this.props.itemPrimary]: 1, [this.props.itemSecondary]: 1}};
 		if (searchText) {
 			selection.where = { or: [
 				{[this.props.itemPrimary]: { regexp: searchText }},

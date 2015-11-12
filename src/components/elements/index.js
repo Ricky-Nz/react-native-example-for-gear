@@ -12,6 +12,8 @@ import GnDialog from './GnDialog';
 import GnLoading from './GnLoading';
 import GnTitlebar from './GnTitlebar';
 import GnLoadMoreFooter from './GnLoadMoreFooter';
+import GnProgressBar from './GnProgressBar';
+import GnFabButton from './GnFabButton';
 
 export default {
 	GnIcon,
@@ -27,5 +29,7 @@ export default {
 	GnDialog,
 	GnLoading,
 	GnTitlebar,
-	GnLoadMoreFooter
+	GnLoadMoreFooter,
+	GnProgressBar,
+	GnFabButton
 }

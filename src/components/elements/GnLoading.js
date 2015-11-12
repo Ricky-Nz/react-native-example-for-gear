@@ -7,13 +7,11 @@ class GnLoading extends Component {
 	}
 	render() {
 		return (
-			<View>
-				<Modal animated={true} transparent={true} visible={true}>
-					<View style={styles.content}>
-						<Text style={styles.indicator}>Loading...</Text>
-					</View>
-				</Modal>
-			</View>
+			<Modal animated={true} transparent={true} visible={this.props.visible}>
+				<View style={styles.content}>
+					<Text style={styles.indicator}>Loading...</Text>
+				</View>
+			</Modal>
 		);
 	}
 	show() {
@@ -27,7 +25,7 @@ class GnLoading extends Component {
 const styles = StyleSheet.create({
 	content: {
 		flex: 1,
-		backgroundColor: 'rgba(0, 0, 0, 0.5)',
+		backgroundColor: 'red',
 		justifyContent: 'center',
 		alignItems: 'center'
 	},

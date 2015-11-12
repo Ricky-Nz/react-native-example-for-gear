@@ -1,5 +1,5 @@
 import { LOGIN, LOGOUT } from '../actions/user-actions';
-import { LOAD_ITEMS } from '../actions/crud-actions';
+import { LOAD_ITEMS, GET_ITEM } from '../actions/crud-actions';
 
 export default function (app = {}, action) {
 	switch(action.type) {
@@ -22,6 +22,12 @@ export default function (app = {}, action) {
 		case LOAD_ITEMS:
 			if (action.finished && !action.error) {
 				return Object.assign({}, app, {total: action.result.total, skip: action.result.skip + action.result.data.length});
+			} else {
+				return app;
+			}
+		case GET_ITEM:
+			if (action.finished && !action.error) {
+				return Object.assign({}, app, {data: action.result});
 			} else {
 				return app;
 			}

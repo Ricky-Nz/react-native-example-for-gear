@@ -1,7 +1,7 @@
-import React, { Component, PropTypes, StyleSheet, ToastAndroid, View, Text } from 'react-native';
-import { GnIcon, GnInput, GnButton, GnLoading } from '../components/elements';
+import React, { Component, PropTypes, StyleSheet, ToastAndroid, Modal, View, Text } from 'react-native';
+import { GnIcon, GnInput, GnButton, GnProgressBar } from '../components/elements';
 import { createSelector } from 'reselect';
-import { connect } from 'react-redux/native';
+import { connect } from 'react-redux';
 import { login } from '../actions/user-actions';
 
 class LoginPage extends Component {
@@ -21,7 +21,7 @@ class LoginPage extends Component {
 		return (
 			<View style={styles.content}>
 				<View style={styles.bannerContent}>
-					<GnIcon icon='cogs' size='lg' color='white'/>
+					<GnIcon icon='cogs' gnSize='lg' color='white'/>
 					<Text style={styles.banner}>Gear Test Automation</Text>
 				</View>
 				<View style={styles.mainContent}>
@@ -34,13 +34,12 @@ class LoginPage extends Component {
 							defaultValue='123456'/>
 					</View>
 					<View style={styles.buttonbar}>
-						<GnButton style={styles.button} label='Register'
+						<GnButton style={styles.leftButton} label='Register'
 							onPress={this.onRegisterClicked.bind(this)}/>
-						<GnButton style={styles.button} label='Login'
+						<GnButton style={styles.rightButton} label='Login'
 							onPress={this.onLoginClicked.bind(this)}/>
 					</View>
 				</View>
-				<GnLoading ref='dialog'/>
 			</View>
 		);
 	}
@@ -83,19 +82,24 @@ const styles = StyleSheet.create({
 	},
 	mainContent: {
 		flex: 2,
-		padding: 10
+		padding: 16
 	},
 	inputContent: {
 		backgroundColor: 'white',
-		borderRadius: 8
+		borderRadius: 8,
+		paddingVertical: 8
 	},
 	buttonbar: {
 		marginTop: 10,
-		flexDirection: 'row',
-		justifyContent: 'flex-end'
+		flexDirection: 'row'
 	},
-	button: {
-		marginLeft: 10
+	leftButton: {
+		flex: 1,
+		marginRight: 5
+	},
+	rightButton: {
+		flex: 1,
+		marginLeft: 5
 	}
 });
 

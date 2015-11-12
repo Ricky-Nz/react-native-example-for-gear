@@ -1,5 +1,8 @@
 import React, { Component, StyleSheet, PropTypes, View, Text } from 'react-native';
 import { GnInput, GnTitlebar, GnTag, GnIcon, GnButton } from '../components/elements';
+import { CREATE_ITEM, GET_ITEM, UPDATE_ITEM, DELETE_ITEM } from '../actions/crud-actions';
+import { createSelector } from 'reselect';
+import { connect } from 'react-redux';
 
 class ScriptPage extends Component {
 	render() {
@@ -10,8 +13,8 @@ class ScriptPage extends Component {
 				<View>
 					<View style={styles.actionHeader}>
 						<Text style={styles.actionIndex}>{index + 1}</Text>
-						<GnButton label='Insert'/>
-						<GnButton label='Delete'/>
+						<GnButton label='Insert' gnSize='sm'/>
+						<GnButton label='Delete' gnSize='sm' gnStyle='danger'/>
 					</View>
 					<View style={styles.contentHorizontal}>
 						<GnButton label={action.actionType||'select action?'}/>
@@ -77,8 +80,7 @@ const styles = StyleSheet.create({
 	},
 	actionHeader: {
 		paddingHorizontal: 6,
-		marginHorizontal: 6,
-		backgroundColor: '#E0F7FA',
+		paddingVertical: 2,
 		borderRadius: 4,
 		flexDirection: 'row',
 		alignItems: 'center'
@@ -95,7 +97,25 @@ const styles = StyleSheet.create({
 });
 
 ScriptPage.propTypes = {
-	script: PropTypes.object.isRequired
+	scriptId: PropTypes.string.isRequired
 };
 
-export default ScriptPage;
+const actionReducer = createSelector(
+	state => state.actionState,
+	actionState => {
+		if ([CREATE_ITEM, GET_ITEM, UPDATE_ITEM, DELETE_ITEM].indexOf(actionState.type)) {
+			return actionState;
+		} else {
+			return null;
+		}
+	}
+);
+
+const storeSelector = StyleSheet.create(
+	actionReducer,
+	(actionState) => ({actionState})
+);
+
+export default connect(storeSelector)(ScriptPage);
+
+

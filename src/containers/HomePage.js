@@ -1,18 +1,19 @@
 import React, { Component, StyleSheet, PropTypes, Navigator, View, Text } from 'react-native';
-import { GnTabBar, GnSearchbar, GnTitlebar } from '../components/elements';
+import { GnTabBar, GnSearchbar, GnTitlebar, GnFabButton } from '../components/elements';
 import { createSelector } from 'reselect';
-import { connect } from 'react-redux/native';
+import { connect } from 'react-redux';
 import ListDataSection from './ListDataSection';
 
 class HomePage extends Component {
 	render() {
 		return (
 			<View style={styles.content}>
-				<GnTitlebar title='Home Page' leftIcon='sign-out' rightIcon='plus'/>
+				<GnTitlebar title='Home Page' rightIcon='sign-out'/>
+				<GnTabBar tabs={this.props.tabs}
+					onSelectTab={this.onSelectTab.bind(this)}/>
 				<Navigator ref='nav' style={styles.content}
 					initialRoute={this.props.tabs[0]} renderScene={this.renderSection.bind(this)}/>
-				<GnTabBar tabs={this.props.tabs} selectIndex={0}
-					onSelectTab={this.onSelectTab.bind(this)}/>
+				<GnFabButton style={styles.bottomBtn} icon='plus'/>
 			</View>
 		);
 	}
@@ -64,15 +65,21 @@ class HomePage extends Component {
 		}
 	}
 	onSelectTab(index) {
-		const nextRoute = this.props.tabs[index];
-		this.refs.nav.replace(nextRoute);
+		this.refs.nav.replace(this.props.tabs[index]);
 	}
 }
 
 const styles = StyleSheet.create({
 	content: {
 		flex: 1,
-		backgroundColor: 'white'
+		backgroundColor: 'white',
+		position: 'relative'
+	},
+	bottomBtn: {
+		position: 'absolute',
+		backgroundColor: '#00BCD4',
+		bottom: 20,
+		right: 20
 	}
 });
 

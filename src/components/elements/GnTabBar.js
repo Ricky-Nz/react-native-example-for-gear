@@ -3,14 +3,18 @@ import GnIcon from './GnIcon';
 import GnClickable from './GnClickable';
 
 class GnTabBar extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {selectIndex: props.defaultSelectIndex||0};
+	}
 	render() {
-		const { tabs, barTintColor, tintColor, selectIndex } = this.props;
+		const { tabs, barTintColor, tintColor } = this.props;
 		const tabViews = tabs.map((tab, index) => (
 			<GnClickable key={index} style={styles.tabItem}
-				onPress={() => this.props.onSelectTab(index)}>
-				<View style={styles.tabContent}>
-					<GnIcon icon={tab.icon} size='sm' color={tintColor}/>
-					<Text style={{color: tintColor, fontSize: 10}}>{tab.label}</Text>
+				onPress={this.onSelectTab.bind(this, index)}>
+				<View style={[styles.tabContent, index === this.state.selectIndex ? styles.tabSelected : null]}>
+					<GnIcon icon={tab.icon} gnSize='sm' color={tintColor}/>
+					<Text style={{color: tintColor, fontSize: 12, marginLeft: 4}}>{tab.label}</Text>
 				</View>
 			</GnClickable>
 		));
@@ -21,12 +25,16 @@ class GnTabBar extends Component {
 			</View>
 		);
 	}
+	onSelectTab(index) {
+		this.setState({selectIndex: index});
+		this.props.onSelectTab(index);
+	}
 }
 
 GnTabBar.propTypes = {
 	barTintColor: PropTypes.string,
 	tintColor: PropTypes.string,
-	selectIndex: PropTypes.number.isRequired,
+	defaultSelectIndex: PropTypes.number,
 	tabs: PropTypes.arrayOf(PropTypes.shape({
 		label: PropTypes.string.isRequired,
 		icon: PropTypes.string.isRequired
@@ -36,20 +44,28 @@ GnTabBar.propTypes = {
 
 GnTabBar.defaultProps = {
 	barTintColor: '#00BCD4',
-	tintColor: 'white'
+	tintColor: 'white',
+	defaultSelectIndex: 0
 };
 
 const styles = StyleSheet.create({
 	content: {
 		flexDirection: 'row',
-		height: 50
+		height: 40
 	},
 	tabItem: {
 		flex: 1
 	},
 	tabContent: {
+		flex: 1,
+		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center'
+	},
+	tabSelected: {
+		borderBottomWidth: 4,
+		borderBottomColor: '#FFEB3B',
+		borderStyle: 'solid'
 	}
 });
 

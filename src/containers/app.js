@@ -1,7 +1,7 @@
 'use strict';
 import React, { Navigator, BackAndroid } from 'react-native';
 import { createSelector } from 'reselect';
-import { connect } from 'react-redux/native';
+import { connect } from 'react-redux';
 import LoginPage from './LoginPage';
 import HomePage from './HomePage';
 import ScriptPage from './ScriptPage';

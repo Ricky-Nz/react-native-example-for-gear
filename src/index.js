@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react-native';
 import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux/native';
+import { Provider } from 'react-redux';
 import rootReducer from './reducers';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
@@ -19,7 +19,7 @@ class Root extends React.Component {
 	render() {
 		return (
 			<Provider store={store}>
-				{() => <Application/>}
+				<Application/>
 			</Provider>
 		);
 	}

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes, StyleSheet, View, ToastAndroid, Text } from 'react-native';
 import { GnIcon, GnInput, GnButton, GnLoading } from '../components/elements';
 import { createSelector } from 'reselect';
-import { connect } from 'react-redux/native';
+import { connect } from 'react-redux';
 import { register } from '../actions/user-actions';
 
 class RegisterPage extends Component {
